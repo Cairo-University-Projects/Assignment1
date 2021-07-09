@@ -4,6 +4,175 @@
 #include <ctype.h>
 
 int N=0;
+
+
+
+
+typedef struct    //define student structure
+{
+    char *name;
+    int id;
+    int day;int month;int year;   //date of birth
+    int student_score;
+}student;
+
+student read_st()       //read student data
+{
+    student st;
+     printf("student name:");
+     st.name=getString();
+     printf("student id:");  scanf("%d",&st.id);
+     printf("student date of birth:\n");
+     printf("day:"); scanf("%d",&st.day);
+     printf("month:"); scanf("%d",&st.month);
+     printf("year:"); scanf("%d",&st.year);
+     printf("student last year score:");  scanf("%d",&st.student_score);
+     return st;
+}
+
+typedef struct node_tmp
+{   student st;
+	struct node_tmp*next;
+}node;
+
+    node*head = NULL;
+	node*tail = NULL;
+
+
+node*newNode(student st)
+{   node*nodeP;
+	nodeP=(node*)malloc(sizeof(node));
+	nodeP->st = st;
+	nodeP->next = NULL;
+	return nodeP;
+}
+
+void insert_end(student st)
+{
+	node*nodeP;
+	nodeP = newNode(st);
+	if(head == NULL)
+	{head = nodeP;
+     tail = nodeP;}
+	else
+	{tail->next= nodeP;
+     tail= tail->next;}
+     N++;
+}
+
+void insert_begin(student st)
+{
+	node*nodeP;
+	nodeP = newNode(st);
+	if(head == NULL)
+	{head = nodeP;
+     tail = nodeP;}
+	else
+	{nodeP->next=head;
+     head=nodeP;}
+     N++;
+}
+
+
+void insert_mid(student st,int location)
+{int index=location-1;
+	node*nodeP;
+	nodeP = newNode(st);
+	if(head == NULL)
+	{head = nodeP;
+     tail = nodeP;}
+	else
+	{if(index>N) {printf("error\n");return;}
+	else if(index==0){insert_begin(st);return;}
+    else if(index==N){insert_end(st);return;}
+	else
+    {node*ptr=head; node*pre; int count=0;
+	 while(count<index)
+     {pre=ptr;
+     ptr=ptr->next;
+     count++;}
+     nodeP->next=ptr;
+     pre->next=nodeP;
+	}}N++;
+}
+
+void display(int location)
+{int index=location-1;
+    node*ptr=head;int n=0;
+while(n<index)
+{ptr=ptr->next;
+n++;}
+printf("%s\n",ptr->st.name);
+}
+
+void display_list(node*head)
+{node*ptr=head;int n=0;
+while(n<N)
+{printf("%s\n",ptr->st.name);
+    ptr=ptr->next;
+n++;}
+}
+
+int main()
+{
+    printf("welcome!\n");
+    int n;
+	printf("for linked list press 1 for dynamic array press 2 \n");
+    int option;
+    scanf("%d",&option);
+    while ((option!=1)&&(option!=2)){
+        printf("please enter 1 or 2 \n" );
+        scanf("%d",&option);
+    }
+
+    printf("enter number of students:");
+    scanf("%d",&n);
+        for(int i=1;i<=n;i++)
+    { printf("enter data of student number %d \n",i);
+	
+	           //option 1 insert linked list 
+			    if(option==1)  {insert_end(read_st());}
+			   
+			   //option 2 insert dynamic array
+			   
+			 }
+if (option==1)
+    {int option2=1;
+    while (option2!=3){
+    printf("press 1 to insert more students \n");
+    printf("press 2 to display the students' list \n");
+    printf("press 3 to exit \n");
+        scanf("%d",&option2);
+    while ((option2!=1)&&(option2!=2)&&(option2!=3)){
+        printf("please enter 1,2 or 3 \n" );
+        scanf("%d",&option2);}
+     if(option2==1){
+    printf("press 1 to insert a student at the beginning of the list \n");
+    printf("press 2 to insert a student at the a certain location in the list \n");
+    printf("press 3 to insert a student at the end of the list \n");
+    int insert_option;
+    scanf("%d",&insert_option);
+    while ((insert_option!=1)&&(insert_option!=2)&&(insert_option!=3)&&(insert_option!=4)){
+        printf("please enter 1,2,3 or 4 \n" );
+        scanf("%d",&insert_option);}
+     if (insert_option==1) insert_begin(read_st());
+     if (insert_option==2) {
+            printf("please enter location of the new student \n" );
+            int location;
+         scanf("%d",&location);
+    while (location>N+1||location<1){
+        printf("error..please enter a positive integer smaller than or equal %d \n",N+1);
+        scanf("%d",&location);}
+        insert_mid(read_st();,location);
+        }
+
+     if (insert_option==3) insert_end(read_st());}
+     if(option2==2)display_list(head);
+     if(option2==3) break;
+    }}
+	
+			 return 0; }
+
 int size = 0; /// Size of the dynamic array.
 int capacity = 0; /// Capacity of dynamic array.
 
