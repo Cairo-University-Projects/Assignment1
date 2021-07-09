@@ -12,4 +12,6 @@ Click on the student.exe file after compilation
 ## How does it work
 Once you start the program the cmd will ask you to choose between dynamic array or linked list to use.
 If you choose dynamic array -pressed 2- it will ask you to enter number of students
+
+
 ![start](screenshots/start.gif)
