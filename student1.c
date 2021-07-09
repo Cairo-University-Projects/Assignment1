@@ -9,19 +9,15 @@ int capacity = 0; /// Capacity of dynamic array.
 
 
 /**String maker function that read string from user*/
-char * getString(){
+char * getString(){ 
     char temp[50];
-
+    scanf("%*c");
     fgets(temp, sizeof(temp), stdin);
     char* str= (char*) malloc(strlen(temp));
-
     for (int i=0;i<strlen(temp);i+=1)
         str[i]=temp[i];
-
     str[strlen(temp)-1]='\0';
-
-    return str;
-}
+    return str;}
 
 
 typedef struct    //define student structure
@@ -32,7 +28,7 @@ typedef struct    //define student structure
     int student_score;
 }student;
 
-student read_st()       //read student data
+student read_st()
 {
     student st;
      printf("student name:");
@@ -152,7 +148,7 @@ student read(student* array)
 {
 
      fflush(stdin);
-     getString();
+     //getString();
 
      student st;
 
@@ -232,10 +228,8 @@ int main()
     }
 
 
-    if(option==2){
-        student_list=add(student_list);
-        print_student(student_list);
-    }
+    student_list=add(student_list);
+    print_student(student_list);
 
 
 if (option==1)
@@ -282,9 +276,7 @@ if (option==1)
 
 /**
     Make a dynamic array of size array size
-
     array_size: the size of the ArrayList
-
     Return int pointer to the dynamic array in heap
 */
 
@@ -306,10 +298,8 @@ ArrayList (int array_size){
 
 /**
     Insert extra element in array in specific position
-
     array: the array that we want to add extra
             element in it
-
     Return integer pointer to the new array in heap
 */
 student *insert (student *array, student new_student, int pos){
@@ -345,10 +335,8 @@ student *insert (student *array, student new_student, int pos){
 
 /**
     Add extra element in array at any location (beginning, end or middle)
-
     array: the array that we want to add extra
             element in it
-
     Return student pointer to the new array in heap
 */
 
