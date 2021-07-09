@@ -2,10 +2,26 @@
 #include<stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
+#include <time.h>
 int N=0;
+int size = 0; /// Size of the dynamic array.
+int capacity = 0; /// Capacity of dynamic array.
 
 
+/**String maker function that read string from user*/
+char * getString(){
+    char temp[50];
+
+    fgets(temp, sizeof(temp), stdin);
+    char* str= (char*) malloc(strlen(temp));
+
+    for (int i=0;i<strlen(temp);i+=1)
+        str[i]=temp[i];
+
+    str[strlen(temp)-1]='\0';
+
+    return str;
+}
 
 
 typedef struct    //define student structure
@@ -113,93 +129,6 @@ while(n<N)
 n++;}
 }
 
-int main()
-{
-    printf("welcome!\n");
-    int n;
-	printf("for linked list press 1 for dynamic array press 2 \n");
-    int option;
-    scanf("%d",&option);
-    while ((option!=1)&&(option!=2)){
-        printf("please enter 1 or 2 \n" );
-        scanf("%d",&option);
-    }
-
-    printf("enter number of students:");
-    scanf("%d",&n);
-        for(int i=1;i<=n;i++)
-    { printf("enter data of student number %d \n",i);
-	
-	           //option 1 insert linked list 
-			    if(option==1)  {insert_end(read_st());}
-			   
-			   //option 2 insert dynamic array
-			   
-			 }
-if (option==1)
-    {int option2=1;
-    while (option2!=3){
-    printf("press 1 to insert more students \n");
-    printf("press 2 to display the students' list \n");
-    printf("press 3 to exit \n");
-        scanf("%d",&option2);
-    while ((option2!=1)&&(option2!=2)&&(option2!=3)){
-        printf("please enter 1,2 or 3 \n" );
-        scanf("%d",&option2);}
-     if(option2==1){
-    printf("press 1 to insert a student at the beginning of the list \n");
-    printf("press 2 to insert a student at the a certain location in the list \n");
-    printf("press 3 to insert a student at the end of the list \n");
-    int insert_option;
-    scanf("%d",&insert_option);
-    while ((insert_option!=1)&&(insert_option!=2)&&(insert_option!=3)&&(insert_option!=4)){
-        printf("please enter 1,2,3 or 4 \n" );
-        scanf("%d",&insert_option);}
-     if (insert_option==1) insert_begin(read_st());
-     if (insert_option==2) {
-            printf("please enter location of the new student \n" );
-            int location;
-         scanf("%d",&location);
-    while (location>N+1||location<1){
-        printf("error..please enter a positive integer smaller than or equal %d \n",N+1);
-        scanf("%d",&location);}
-        insert_mid(read_st();,location);
-        }
-
-     if (insert_option==3) insert_end(read_st());}
-     if(option2==2)display_list(head);
-     if(option2==3) break;
-    }}
-	
-			 return 0; }
-
-int size = 0; /// Size of the dynamic array.
-int capacity = 0; /// Capacity of dynamic array.
-
-
-/**String maker function that read string from user*/
-char * getString(){
-    char temp[50];
-
-    fgets(temp, sizeof(temp), stdin);
-    char* str= (char*) malloc(strlen(temp));
-
-    for (int i=0;i<strlen(temp);i+=1)
-        str[i]=temp[i];
-
-    str[strlen(temp)-1]='\0';
-
-    return str;
-}
-
-
-typedef struct    /// define student structure
-{
-    char *name;
-    int id;
-    int day;int month;int year;   /// date of birth
-    int student_score;
-}student;
 
 student *add (student *array);
 student *insert (student *array, student new_student, int pos);
@@ -219,16 +148,16 @@ char *lower (char *str){
 
 
 /**Read student data*/
-student read_st(student* array)
+student read(student* array)
 {
 
      fflush(stdin);
-
+     getString();
 
      student st;
 
      printf("student name:");
-     st.name=getString();;
+     st.name=getString();
 
      printf("student id:");  scanf("%d",&st.id);
 
@@ -293,14 +222,56 @@ int main()
     {
              printf("Enter data of student number %d \n",i+1);
                 if (option==1){
-
+                     insert_end(read_st());
                 }else if(option==2)
-                    student_list[i]=read_st(student_list);
+                    /// Read the data
+                    student_list[i]=read(student_list);
+
+
+
     }
 
 
     student_list=add(student_list);
     print_student(student_list);
+
+
+if (option==1)
+    {int option2=1;
+    while (option2!=3){
+    printf("press 1 to insert more students \n");
+    printf("press 2 to display the students' list \n");
+    printf("press 3 to exit \n");
+        scanf("%d",&option2);
+    while ((option2!=1)&&(option2!=2)&&(option2!=3)){
+        printf("please enter 1,2 or 3 \n" );
+        scanf("%d",&option2);}
+     if(option2==1){
+    printf("press 1 to insert a student at the beginning of the list \n");
+    printf("press 2 to insert a student at the a certain location in the list \n");
+    printf("press 3 to insert a student at the end of the list \n");
+    int insert_option;
+    scanf("%d",&insert_option);
+    while ((insert_option!=1)&&(insert_option!=2)&&(insert_option!=3)&&(insert_option!=4)){
+        printf("please enter 1,2,3 or 4 \n" );
+        scanf("%d",&insert_option);}
+     if (insert_option==1) insert_begin(read_st());
+     if (insert_option==2) {
+            printf("please enter location of the new student \n" );
+            int location;
+         scanf("%d",&location);
+    while (location>N+1||location<1){
+        printf("error..please enter a positive integer smaller than or equal %d \n",N+1);
+        scanf("%d",&location);}
+        insert_mid(read_st(),location);
+        }
+
+     if (insert_option==3) insert_end(read_st());}
+     if(option2==2)display_list(head);
+     if(option2==3) break;
+    }}
+
+
 
     return 0;
 }
@@ -396,22 +367,32 @@ student *add (student *array){
         scanf ("%d", &pos);		// get the position
     }
 
+
     if(pos==3){
         printf("\nWhere would you like to insert the student in\n");
         scanf ("%d", &loc);		// get the position
     }
 
     printf ("\nEnter the student data\n");
-    new_student=read_st(array);
+    new_student=read(array);
 
-    if (pos==1)
-        return insert(array, new_student, 1);
+    if (pos==1){
+        int start=clock();
+        student *begin=insert(array, new_student, 1);
+        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);
+        return begin;
+    }
     else if (pos==2){
+        int start=clock();
         array[size] = new_student;
         size+=1;
+        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);
         return array;
-    }else if(pos==3)
-        return insert(array, new_student, loc);
-
+    }else if(pos==3){
+        double start=clock();
+        student *middle=insert(array, new_student, loc);
+        printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);
+        return middle;
+    }
     return array;
 }
