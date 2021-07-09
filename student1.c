@@ -232,8 +232,10 @@ int main()
     }
 
 
-    student_list=add(student_list);
-    print_student(student_list);
+    if(option==2){
+        student_list=add(student_list);
+        print_student(student_list);
+    }
 
 
 if (option==1)
