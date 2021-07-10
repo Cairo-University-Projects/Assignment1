@@ -13,10 +13,17 @@ Click on the student.exe file after compilation
 
 ## How does it work
 Once you start the program the cmd will ask you to choose between dynamic array or linked list to use.
+
 If you choose dynamic array -pressed 2- it will ask you to enter number of students
 
 
 ![start](screenshots/start.gif)
+
+If you choose linked list -pressed 1- it will ask you to enter number of students
+
+![start](screenshots/start2.gif)
+
+
 
 ## Which is better
  * Insertion at the beginning, if the array is not empty the linked list will be the winner as it is O(1) while the dynamic array is O(n).
