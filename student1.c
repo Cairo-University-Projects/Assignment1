@@ -537,10 +537,7 @@ student *add_mul (student *array, int i, int pos){
     }
 
 
-    if(pos==3){
-        printf("\nWhere would you like to insert the student in\n");
-        scanf ("%d", &loc);		// get the position
-    }
+   
 
     printf ("\nEnter the student data\n");
     new_student=read_mul(array, i);
@@ -552,7 +549,7 @@ student *add_mul (student *array, int i, int pos){
         size+=1;
         return array;
     }else if(pos==3)
-        return insert(array, new_student, loc);
+        return insert(array, new_student, 1);
     
     return array;
 }
