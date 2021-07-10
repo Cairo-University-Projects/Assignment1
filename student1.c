@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-int N=0;
+int N=0;///total number of students
 int size = 0; /// Size of the dynamic array.
 int capacity = 0; /// Capacity of dynamic array.
 
@@ -18,6 +18,19 @@ char * getString(){
         str[i]=temp[i];
     str[strlen(temp)-1]='\0';
     return str;}
+
+/**Change string to lowercase*/
+char *lower (char *str){
+
+  char* new_str ="";
+  for (int i = 0; i < strlen (str); i += 1){
+    printf("%c",tolower(str[i]));
+    new_str = new_str+tolower (str[i]);
+  }
+
+  return new_str;
+}
+
 
 
 typedef struct    //define student structure
@@ -132,67 +145,12 @@ n++;}
 student *add (student *array);
 student *insert (student *array, student new_student, int pos);
 student *ArrayList (int array_size);
-
-/**Change string to lowercase*/
-char *lower (char *str){
-
-  char* new_str ="";
-  for (int i = 0; i < strlen (str); i += 1){
-    printf("%c",tolower(str[i]));
-    new_str = new_str+tolower (str[i]);
-  }
-
-  return new_str;
-}
-
-
-/**Read student data*/
-student read(student* array)
-{
-
-     fflush(stdin);
-     //getString();
-
-     student st;
-
-     printf("student name:");
-     st.name=getString();
-
-     printf("student id:");  scanf("%d",&st.id);
-
-     while(sizeof(st.id) != 4) scanf("%d",&st.id);
-
-     printf("student date of birth:\n");
-     printf("day:"); scanf("%d",&st.day);
-     while(sizeof(st.id) != 4) scanf("%d",&st.day);
-
-     printf("month:"); scanf("%d",&st.month);
-     while(sizeof(st.id) != 4) scanf("%d",&st.year);
-
-     printf("year:"); scanf("%d",&st.year);
-     while(sizeof(st.id) != 4) scanf("%d",&st.year);
-
-     printf("student last year score:");  scanf("%d",&st.student_score);
-
-     return st;
-}
+student read(student* array);
+void print_student(student* st);
 
 
 
 
-/** Print student data*/
-void print_student(student* st){
-
-    printf("Name    |  Id  | Day  | Month |  Year  |  Score\n");
-    printf("__________________________________________________\n");
-
-
-    for (int i=0;i<size;i+=1){
-        printf("%7s |  %2d  |  %2d  |  %2d   |  %4d  |  %3d\n", st[i].name, st[i].id, st[i].day
-               , st[i].month, st[i].year, st[i].student_score);
-        printf("---------------------------------------------------\n");
-    }
-}
 int main()
 {
 
@@ -239,28 +197,53 @@ int main()
 
 if (option==1)
     {int option2=1;
-    while (option2!=3){
+    while (option2!=4){
     printf("press 1 to insert more students \n");
     printf("press 2 to display the students' list \n");
-    printf("press 3 to exit \n");
+    printf("press 3 to calculate time comlexity of insertion \n");
+    printf("press 4 to exit \n");
         scanf("%d",&option2);
-    while ((option2!=1)&&(option2!=2)&&(option2!=3)){
-        printf("please enter 1,2 or 3 \n" );
+    while ((option2!=1)&&(option2!=2)&&(option2!=3)&&(option2!=4)){
+        printf("please enter 1,2,3 or 4 \n" );
         scanf("%d",&option2);}
-     if(option2==1){
+     if(option2==1||option2==3){
+         if (option2==3){head=NULL;tail=NULL;N=0;
+    printf("press 1 for large number(10000) of students \n");
+    printf("press 2 for medium number(5000) of students \n");
+    printf("press 3 for small number(1000) of students \n");
+            int number_option;
+    scanf("%d",&number_option);
+    while ((number_option!=1)&&(number_option!=2)&&(number_option!=3)){
+        printf("please enter 1,2 or 3 \n" );
+        scanf("%d",&number_option);}
+        int number;
+        if(number_option==1)number=10000;
+        if(number_option==2)number=5000;
+        if(number_option==3)number=1000;
+         for(int i=1;i<=number;i++){
+            student temp_struct;
+            char temp[50];
+            snprintf(temp,50,"soliman%d", i);
+            temp_struct.name=temp;
+            temp_struct.id=i;
+            temp_struct.day=1;temp_struct.month=1;temp_struct.year=1990+i;
+            temp_struct.student_score=500+i;
+            insert_end(temp_struct);
+         }printf("%d students data were aded successfully\n\n",N);
+         }
     printf("press 1 to insert a student at the beginning of the list \n");
     printf("press 2 to insert a student at the a certain location in the list \n");
     printf("press 3 to insert a student at the end of the list \n");
     int insert_option;
     scanf("%d",&insert_option);
-    while ((insert_option!=1)&&(insert_option!=2)&&(insert_option!=3)&&(insert_option!=4)){
-        printf("please enter 1,2,3 or 4 \n" );
+    while ((insert_option!=1)&&(insert_option!=2)&&(insert_option!=3)){
+        printf("please enter 1,2 or 3 \n" );
         scanf("%d",&insert_option);}
      if (insert_option==1) {
         student temp_struct=read_st();
         int start=clock();
         insert_begin(temp_struct);
-        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);}
+      if (option2==3)  printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);}
      if (insert_option==2) {
             printf("please enter location of the new student \n" );
             int location;
@@ -271,18 +254,18 @@ if (option==1)
                student temp_struct=read_st();
         int start=clock();
         insert_mid(temp_struct,location);
-        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);
+      if (option2==3)  printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);
         }
 
      if (insert_option==3) {
         student temp_struct=read_st();
         int start=clock();
         insert_end(temp_struct);
-        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);}
+      if (option2==3)  printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);}
          
      }
      if(option2==2)display_list(head);
-     if(option2==3) break;
+     if(option2==4) break;
     }}
 
     printf("size of the structure= %lu bytes\n",sizeof(student));
@@ -291,6 +274,51 @@ if (option==1)
     return 0;
 }
 
+
+/**Read student data*/
+student read(student* array)
+{
+
+     fflush(stdin);
+     //getString();
+
+     student st;
+
+     printf("student name:");
+     st.name=getString();
+
+     printf("student id:");  scanf("%d",&st.id);
+
+     while(sizeof(st.id) != 4) scanf("%d",&st.id);
+
+     printf("student date of birth:\n");
+     printf("day:"); scanf("%d",&st.day);
+     while(sizeof(st.id) != 4) scanf("%d",&st.day);
+
+     printf("month:"); scanf("%d",&st.month);
+     while(sizeof(st.id) != 4) scanf("%d",&st.year);
+
+     printf("year:"); scanf("%d",&st.year);
+     while(sizeof(st.id) != 4) scanf("%d",&st.year);
+
+     printf("student last year score:");  scanf("%d",&st.student_score);
+
+     return st;
+}
+
+/** Print student data*/
+void print_student(student* st){
+
+    printf("Name    |  Id  | Day  | Month |  Year  |  Score\n");
+    printf("__________________________________________________\n");
+
+
+    for (int i=0;i<size;i+=1){
+        printf("%7s |  %2d  |  %2d  |  %2d   |  %4d  |  %3d\n", st[i].name, st[i].id, st[i].day
+               , st[i].month, st[i].year, st[i].student_score);
+        printf("---------------------------------------------------\n");
+    }
+}
 
 
 /**
@@ -388,14 +416,14 @@ student *add (student *array){
     if (pos==1){
         int start=clock();
         student *begin=insert(array, new_student, 1);
-        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);
+        printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);
         return begin;
     }
     else if (pos==2){
         int start=clock();
         array[size] = new_student;
         size+=1;
-        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);
+        printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);
         return array;
     }else if(pos==3){
         double start=clock();
