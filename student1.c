@@ -120,8 +120,11 @@ printf("%s\n",ptr->st.name);
 void display_list(node*head)
 {node*ptr=head;int n=0;
 while(n<N)
-{printf("%s\n",ptr->st.name);
-    ptr=ptr->next;
+{printf("name:%s\n",ptr->st.name);
+printf("ID:%d\n",ptr->st.id);
+printf("Date of birth:%d/%d/%d\n",ptr->st.day,ptr->st.month,ptr->st.year);
+printf("student last year score:%d\n",ptr->st.student_score);
+ptr=ptr->next;
 n++;}
 }
 
@@ -253,7 +256,11 @@ if (option==1)
     while ((insert_option!=1)&&(insert_option!=2)&&(insert_option!=3)&&(insert_option!=4)){
         printf("please enter 1,2,3 or 4 \n" );
         scanf("%d",&insert_option);}
-     if (insert_option==1) insert_begin(read_st());
+     if (insert_option==1) {
+        student temp_struct=read_st();
+        int start=clock();
+        insert_begin(temp_struct);
+        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);}
      if (insert_option==2) {
             printf("please enter location of the new student \n" );
             int location;
@@ -261,10 +268,19 @@ if (option==1)
     while (location>N+1||location<1){
         printf("error..please enter a positive integer smaller than or equal %d \n",N+1);
         scanf("%d",&location);}
-        insert_mid(read_st(),location);
+               student temp_struct=read_st();
+        int start=clock();
+        insert_mid(temp_struct,location);
+        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);
         }
 
-     if (insert_option==3) insert_end(read_st());}
+     if (insert_option==3) {
+        student temp_struct=read_st();
+        int start=clock();
+        insert_end(temp_struct);
+        printf("Total time is: %f\n", (double)(clock()-start)/CLOCKS_PER_SEC);}
+         
+     }
      if(option2==2)display_list(head);
      if(option2==3) break;
     }}
