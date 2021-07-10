@@ -27,7 +27,7 @@ If you choose linked list -pressed 1- it will ask you to enter number of student
 
 ## Which is better
  * Insertion at the beginning, if the array is not empty the linked list will be the winner as it is O(1) while the dynamic array is O(n).
- * Insertion at the end, both will be the same if linked list is at the end as it will be O(1) and the array will insert at last position array[size] if the dynamic array's capacity is still greater than the size, and if the size==capacity then the array will be       O(n). So, here it will depend.
+ * Insertion at the end, both will be the same as it will be O(1) and the array will insert at last position array[size] if the dynamic array's capacity is still greater than the size, and if the size==capacity then the array will be       O(n). So, here it will depend.
  * Insertion at the middle, it will depend on how many elements after that position but almost linked list will be the winner as it always at inserting O(1) but dynamic array needs to shift all the element after that position.
 
 ## Resources
