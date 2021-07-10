@@ -285,7 +285,8 @@ if (option==1)
      if(option2==3) break;
     }}
 
-
+    printf("size of the structure= %lu bytes\n",sizeof(student));
+    printf("size of the node= %lu bytes\n",sizeof(node));
 
     return 0;
 }
