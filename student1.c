@@ -147,6 +147,8 @@ student *insert (student *array, student new_student, int pos);
 student *ArrayList (int array_size);
 student read(student* array);
 void print_student(student* st);
+student read_mul(student* array, int i);
+student *add_mul (student *array, int i, int pos);
 
 
 
@@ -189,9 +191,50 @@ int main()
     }
 
 
-    if(option==2){
-        student_list=add(student_list);
-        print_student(student_list);
+    while(option==2){
+        /// Ask user for inputs
+        printf("Would you like to\n1. Insert more students\n2. Display the students\n3. Calculate time comlexity\n4. exit\n");
+        int option2=1;
+        scanf("%d",&option2);
+        
+        /// Choose from options 
+        switch(option2){
+            /// Add more stdents
+            case 1: student_list=add(student_list); break;
+            case 2: print_student(student_list); break;
+            case 3: 
+            
+                /// choose Large number or medium or small
+                printf("press 1 for large number(10000) of students \n");
+                printf("press 2 for medium number(5000) of students \n");
+                printf("press 3 for small number(1000) of students \n");
+                
+                // OPTION WHETHER LARGE MEDIUM OR SMALL.
+                int number_option;
+                scanf("%d",&number_option);
+                
+                // Number of iterations
+                int number;
+                if(number_option==1)number=10000;
+                if(number_option==2)number=5000;
+                if(number_option==3)number=1000;
+                
+                int pos=0;
+                /// Choose location
+                while(pos<=0 || pos>3){
+                    printf ("Would you like to add at\n1-Beginning\n2-End\n3-Middle\n");
+                    scanf ("%d", &pos);		// get the position
+                }
+                
+                int start=clock();
+                for(int i=0;i<=number;i++)
+                    student_list=add_mul(student_list, i, pos);       
+                
+                printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);
+            break;
+            
+            case 4: exit(0); break;
+        }
     }
 
 
@@ -302,6 +345,38 @@ student read(student* array)
      while(sizeof(st.id) != 4) scanf("%d",&st.year);
 
      printf("student last year score:");  scanf("%d",&st.student_score);
+
+     return st;
+}
+
+
+
+/**Read to  data*/
+student read_mul(student* array, int i)
+{
+
+     fflush(stdin);
+
+     student st;
+
+     printf("Enter student name:");
+    st.name="soliman";
+    // sprintf(st.name, "soliman %d", i);
+
+     printf("student id:");  st.id=(i+1)*2^i;
+     printf("%d \n", st.id);
+
+     printf("student date of birth:\n");st.day=i%31;
+     printf("day: %d\n", st.day); 
+
+     st.month=i%12;
+     printf("month: %d\n", st.month);
+     
+     st.year=(i+2000)%2020;
+     printf("year: %d\n", st.year); 
+
+     st.student_score=i%100;
+     printf("student last year score: %d\n", st.student_score); 
 
      return st;
 }
@@ -431,5 +506,44 @@ student *add (student *array){
         printf("Total time is: %f milli second\n", (double)(clock()-start)/CLOCKS_PER_SEC*10e3);
         return middle;
     }
+    return array;
+}
+
+
+/**
+    Add extra element in array at any location (beginning, end or middle)
+    array: the array that we want to add extra
+            element in it
+    Return student pointer to the new array in heap
+*/
+
+student *add_mul (student *array, int i, int pos){
+
+    int loc;
+    student new_student;
+
+    if (size == capacity){
+        array = (student *) realloc (array, capacity * 2 * sizeof (*array));
+        capacity = capacity * 2;
+    }
+
+
+    if(pos==3){
+        printf("\nWhere would you like to insert the student in\n");
+        scanf ("%d", &loc);		// get the position
+    }
+
+    printf ("\nEnter the student data\n");
+    new_student=read_mul(array, i);
+
+    if (pos==1)
+        return insert(array, new_student, 1);
+    else if (pos==2){
+        array[size] = new_student;
+        size+=1;
+        return array;
+    }else if(pos==3)
+        return insert(array, new_student, loc);
+    
     return array;
 }
